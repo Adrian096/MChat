@@ -1,6 +1,6 @@
 <template>
     <div class="room-expanded-list-box">
-        <input type="text" class="form-text-custom" name="search" id="search-box" v-model="search" placeholder="Search your room...">
+        <input v-model="search" type="text" class="form-text-custom" name="search" id="search-box" placeholder="Search your room...">
         <ul>
             <li v-for="room in filteredList" @click="changeRoom(room.name)">{{ room.name }}</li>
         </ul>
@@ -20,7 +20,7 @@ export default {
     computed: {
         filteredList() {
             return this.rooms.filter(room => {
-                return room.name.toLowerCase().includes(this.search.toLowerCase())
+                return room.name.toLowerCase().indexOf(this.search.toLowerCase()) >= 0
             })
         }
     },

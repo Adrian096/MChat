@@ -31,26 +31,47 @@
 </head>
 <body>
     <div id="app"> 
-        <nav class="navbar">
+        <nav class="navbar bg-dark">
             <a class="nav-brand" href="{{ route('welcome') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
-            {{-- <div id="search">
-                <form action="" method="get">
-                    <input type="text" name="search_text" id="search_text" placeholder="Search"/>
-                    <input type="button" name="search_button" id="search_button"></a>
-                </form>
-                <ul class="subnav">
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Application</a></li>
-                    <li><a href="#">Board</a></li>
-                    <li><a href="#">Options</a></li>
-                </ul>
-            </div> --}}
+            
             <div class="nav-content">
-                
+                <room-search :rooms="{{$rooms}}"></room-search>
+                <ul class="mr-auto-nav clr-mg-pd"></ul>
+                <ul class="nav-auto-right ml-auto-nav clr-mg-pd">
+                    <button type="button" class="btn btn-dark wh-nowrap" v-on:click="$refs.create_room.toggleCreateRoomWindow()">Create Room</button>
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item highlight" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <a class="dropdown-item highlight" href="{{ route('settings') }}">Settings</a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                </ul>
             </div>
-            <ul class="nav-auto"></ul>
+            
         </nav>
 
         {{-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

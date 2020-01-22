@@ -8,6 +8,7 @@ window.jQuery = $;
 window.$ = $;
 
 require('./bootstrap');
+require('es6-promise').polyfill();
 
 window.route = require('./route');
 window.Vue = require('vue');
@@ -29,7 +30,7 @@ Vue.component('room-authorization-form', require('./components/RoomAuthorization
 Vue.component('room-list', require('./components/RoomList.vue').default);
 Vue.component('room-expanded-list', require('./components/RoomExpandedList.vue').default);
 Vue.component('settings-form', require('./components/SettingsForm.vue').default);
-
+Vue.component('room-search', require('./components/RoomSearch.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
