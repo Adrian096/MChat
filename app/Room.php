@@ -26,8 +26,11 @@ class Room extends Model
         'password'
     ];
 
-    public function users()
-    {
+    public function users() {
         return $this->belongsToMany('App\User', 'channel_auths', 'room_id', 'user_id')->withTimestamps();
+    }
+
+    public function tags() {
+        return $this->belongsToMany('App\Tag', 'room_tag', 'room_id', 'tag_id');
     }
 }

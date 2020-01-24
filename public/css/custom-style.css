@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    border-color: #454b51;
+    border-color: rgb(31, 127, 92);
     border-width: 1px;
 }
 
@@ -14,6 +14,10 @@
     height: 100vh;
 }
 
+.bd-green {
+   border-color: rgb(31, 127, 92);
+}
+
 .clr-mg-pd {
     margin: 0;
     padding: 0;
@@ -21,6 +25,16 @@
 
 .wh-nowrap {
     white-space: nowrap;
+}
+
+.resizable-border {
+    display: block;
+    float: left;
+    height: 100%;
+    width: 2px;
+}
+.resizable-border:hover {
+    cursor: e-resize;
 }
 
 .contener {
@@ -40,6 +54,8 @@
     float: left;
     height: 100%;
     width: 20%;
+    max-width: 70%;
+    min-width: 20%;
     overflow-y: auto;
     border-style: none none none solid;
 }
@@ -380,6 +396,8 @@
 }
 
 .nav-brand {
+    text-decoration: none !important;
+    color: white !important;
     padding-top: 0.32rem;
     padding-bottom: 0.32rem;
     font-size: 1.125rem;

@@ -31,7 +31,7 @@
 </head>
 <body>
     <div id="app"> 
-        <nav class="navbar bg-dark">
+        <nav class="navbar bg-dark bd-green">
             <a class="nav-brand" href="{{ route('welcome') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
@@ -71,70 +71,7 @@
                         @endguest
                 </ul>
             </div>
-            
         </nav>
-
-        {{-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="{{ route('welcome') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div id="search">
-                    <form action="" method="get">
-                        <input type="text" name="search_text" id="search_text" placeholder="Search"/>
-                        <input type="button" name="search_button" id="search_button"></a>
-                    </form>
-                    <ul class="subnav">
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Application</a></li>
-                        <li><a href="#">Board</a></li>
-                        <li><a href="#">Options</a></li>
-                    </ul>
-                </div>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        
-                    </ul>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        <button type="button" class="btn btn-dark" v-on:click="$refs.create_room.toggleCreateRoomWindow()">Create Room</button>
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item highlight" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    <a class="dropdown-item highlight" href="{{ route('settings') }}">Settings</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav> --}}
 
         <create-room-form ref="create_room"></create-room-form>
         <room-authorization-form ref="auth_room"></room-authorization-form>
@@ -146,17 +83,55 @@
                 </button>
             </div>
         @endif
-
         <div class="contener">
             <div class="left-box">
                 @yield('content')
             </div>
             <div class="right-box">
-
+                <span class="resizable-border"></span>
             </div>
         </div>
         <div style="clear: both;"></div>
     </div>
+
+    <script>
+        var convertToPercent = function(val) {
+            if(val.slice(-1) == '%') return parseFloat(val.replace('%', ''));
+            if(val.slice(-2) == "px") {
+                val = parseFloat(val.replace("px", ''));
+                return ((val / window.innerWidth) * 100)
+            }
+        }
+
+        function makeResizableDiv () {
+            const resizer = document.querySelector('.resizable-border');
+            const leftBox = document.querySelector('.left-box');
+            const parent = resizer.parentElement;
+            const min = convertToPercent(window.getComputedStyle(parent, null).getPropertyValue('min-width'));
+            const max = convertToPercent(window.getComputedStyle(parent, null).getPropertyValue('max-width'));
+            resizer.addEventListener('mousedown', function (e) {
+                e.preventDefault();
+                window.addEventListener('mousemove', resize);
+                window.addEventListener('mouseup', stopResize);
+            });
+
+            function resize(e) {
+                const parentPercentWidth = 100 - ((e.pageX / window.innerWidth) * 100);
+                const widthLeft = 100 - parentPercentWidth;
+
+                if(parentPercentWidth > min && parentPercentWidth < max){
+                    parent.style.width = parentPercentWidth + '%';
+                    leftBox.style.width = widthLeft + '%';
+                }
+            }
+
+            function stopResize() {
+                window.removeEventListener('mousemove', resize);
+            }
+        }
+        makeResizableDiv();
+    </script>
+    
     @yield('scripts')
 </body>
 </html>

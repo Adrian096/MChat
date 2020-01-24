@@ -48,6 +48,9 @@ const app = new Vue({
         var element = document.getElementById("msgBox");
         element.scrollTop = element.scrollHeight;
     },
+    mounted() {
+        makeResizableDiv();
+    },
     methods: {  
         fetchMessages(url) {
             axios.post(url).then(response => {

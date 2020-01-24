@@ -38,13 +38,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function rooms()
-    {
+    public function rooms() {
         return $this->belongsToMany('App\Room', 'channel_auths', 'user_id', 'room_id')->withTimestamps();
     }
 
-    public function canJoinRoom(string $roomName)
-    {
+    public function canJoinRoom(string $roomName) {
         $room = Room::where('name', $roomName)->firstOrFail();
         return (!$room->isPrivate || $room->users->contains($this->id));
     }

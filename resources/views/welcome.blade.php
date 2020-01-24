@@ -36,7 +36,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <room-expanded-list :rooms="{{$rooms}}"></room-expanded-list>
+            {{-- <room-expanded-list :rooms="{{$rooms}}"></room-expanded-list> --}}
             <!--<room-list :items="{{$rooms}}" current-item="{{Request::route('id')}}"></room-list>-->
         </div>
     </div>

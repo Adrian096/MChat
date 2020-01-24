@@ -61696,6 +61696,9 @@ var app = new Vue({
     var element = document.getElementById("msgBox");
     element.scrollTop = element.scrollHeight;
   },
+  mounted: function mounted() {
+    makeResizableDiv();
+  },
   methods: {
     fetchMessages: function fetchMessages(url) {
       var _this = this;
