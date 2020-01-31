@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/', function(){
+Route::get('/', function() {
     return view('welcome');
 })->name('welcome');
 
@@ -26,8 +26,9 @@ Route::post('/room/authorizeUser', 'RoomController@authorizeUser')->middleware('
 Route::get('/profile/settings', function(){
     return view('settings');
 })->middleware('auth')->name('settings');
+Route::get('/profile/fetchFavorites', 'RoomController@fetchFavorites')->middleware('auth')->name('fetch-favorites');
 Route::post('/profile/settings', 'SettingsController@update')->middleware('auth')->name('save-settings');
-
+Route::post('room/{id}/favorites', 'RoomController@addFavorite')->middleware('auth')->name('favorite');
 Route::middleware('room.auth')->group( function () {
 
     Route::get('/room/{id}', function(){

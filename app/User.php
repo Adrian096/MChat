@@ -35,7 +35,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime'
     ];
 
     public function rooms() {
@@ -45,5 +45,10 @@ class User extends Authenticatable
     public function canJoinRoom(string $roomName) {
         $room = Room::where('name', $roomName)->firstOrFail();
         return (!$room->isPrivate || $room->users->contains($this->id));
+    }
+
+    public function fav_rooms() {
+        return $this->belongsToMany('App\Room', 'favorites', 'user_id', 'room_id')
+            ->withTimestamps();
     }
 }

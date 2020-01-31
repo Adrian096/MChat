@@ -7,6 +7,12 @@
             <form @submit.prevent="submit">
                 <input type="text" class="form-text-custom fadeIn first" name="roomname" id="roomname" placeholder="Room Name" v-model="fields.roomname"><br/>
                 <p class="text-danger" v-if="errors && errors.roomname">{{ errors.roomname[0] }}</p>
+                <select class="form-text-custom" name="tag" v-model="fields.tag">
+                    <option :value="null" disabled hidden>Category...</option>
+                    <option v-for="tag in tags" :value="tag.name">{{ tag.name }}</option>
+                    <option value="test">test</option>
+                </select>
+                <p class="text-danger" v-if="errors && errors.tag">{{ errors.tag[0] }}</p>
                 <input type="checkbox" class="form-check-input" name="private" v-model="fields.private"/> Private Room<br/>
                 <p class="text-danger" v-if="errors && errors.private">{{ errors.private[0] }}</p>
                 <input type="password" class="form-password-custom" name="password" placeholder="password" v-model="fields.password" v-if="fields.private"><br v-if="fields.private"/>
@@ -20,7 +26,6 @@
     </div>
 </template>
 
-
 <script>
 export default {
     data() {
@@ -29,15 +34,18 @@ export default {
             fields: {
                 roomname: '',
                 private: false,
+                tag: null,
             },
             errors: {},
         }
     },
+    props: ['tags'],
     methods: {
         clearFields(){
             this.fields = {
                 roomname: '',
                 private: false,
+                tag: null,
             };
         },
         toggleCreateRoomWindow(){

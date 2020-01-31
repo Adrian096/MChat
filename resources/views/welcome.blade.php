@@ -29,17 +29,56 @@
         .room-expanded-list-box > ul > li:hover {
             background-color: #d9d9d9;
         }
+
+        .tag-header {
+            color: white;
+            margin-top: 20px;
+            border-style: none none dotted none;
+        }
+
+        .clr-list-style {
+            list-style: none;
+        }
+
+        .fl-left {
+            float: left;
+        }
+
+        .room-list {
+            padding: 10px;
+        }
+
+        .room-list > li {
+            text-decoration: none;
+            font-size: 1rem; 
+            margin-left: 15px;
+            color: #3490dc;
+            cursor: pointer;
+        }
+
+        .room-list > li:hover {
+            color: #1270ba;
+        }
+
+        .badge-info {
+            font-size: 1rem;
+        }
     </style>
 @endsection
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            {{-- <room-expanded-list :rooms="{{$rooms}}"></room-expanded-list> --}}
-            <!--<room-list :items="{{$rooms}}" current-item="{{Request::route('id')}}"></room-list>-->
-        </div>
-    </div>
+    @foreach ($tags as $tag)
+        <div class="tag-header"><h2 style="margin-left: 15px;"> {{ $tag->name }} <span class="badge badge-info">{{ $tag->rooms->count() }}</span> </h2></div>
+        <ul class="room-list clr-list-style">
+            @foreach ($tag->rooms as $room)
+                <li class="fl-left" v-on:click="changeRoom('{{$room->name}}')">{{$room->name}}</li>
+            @endforeach
+            @if($tag->rooms->count() > 0)
+                <li style="clear:both;"></li>
+            @endif
+        </ul>
+    @endforeach
 </div>
 @endsection
 

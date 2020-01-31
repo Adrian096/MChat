@@ -1891,22 +1891,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       createRoomWindow: false,
       fields: {
         roomname: '',
-        "private": false
+        "private": false,
+        tag: null
       },
       errors: {}
     };
   },
+  props: ['tags'],
   methods: {
     clearFields: function clearFields() {
       this.fields = {
         roomname: '',
-        "private": false
+        "private": false,
+        tag: null
       };
     },
     toggleCreateRoomWindow: function toggleCreateRoomWindow() {
@@ -48786,6 +48794,66 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fields.tag,
+                      expression: "fields.tag"
+                    }
+                  ],
+                  staticClass: "form-text-custom",
+                  attrs: { name: "tag" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.fields,
+                        "tag",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "option",
+                    {
+                      attrs: { disabled: "", hidden: "" },
+                      domProps: { value: null }
+                    },
+                    [_vm._v("Category...")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.tags, function(tag) {
+                    return _c("option", { domProps: { value: tag.name } }, [
+                      _vm._v(_vm._s(tag.name))
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "test" } }, [_vm._v("test")])
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.tag
+                ? _c("p", { staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(_vm.errors.tag[0]))
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -61689,6 +61757,7 @@ Vue.component('room-search', __webpack_require__(/*! ./components/RoomSearch.vue
 var app = new Vue({
   el: '#app',
   data: {
+    favorites: [],
     messages: [],
     message: ''
   },
@@ -61698,6 +61767,7 @@ var app = new Vue({
   },
   mounted: function mounted() {
     makeResizableDiv();
+    this.fetchFavorites();
   },
   methods: {
     fetchMessages: function fetchMessages(url) {
@@ -61731,7 +61801,42 @@ var app = new Vue({
           user: e.user
         });
       });
-    }
+    },
+    addFavorite: function addFavorite(room) {
+      var _this4 = this;
+
+      var url = route('favorite', room);
+      axios.post(url).then(function (response) {
+        if (response.data['status'] == 'success') {
+          _this4.fetchFavorites();
+        }
+      });
+    },
+    fetchFavorites: function fetchFavorites() {
+      var _this5 = this;
+
+      var url = route('fetch-favorites');
+      axios.get(url).then(function (response) {
+        if (response.data['status'] == 'success') {
+          _this5.favorites = response.data['favorites'];
+        }
+      });
+    },
+    changeRoom: function changeRoom(room) {
+      var _this6 = this;
+
+      var url = route('room', room);
+      axios.get(url).then(function (response) {
+        window.location.href = url;
+      })["catch"](function (error) {
+        if (error.response.status === 403) {
+          _this6.selected = _this6.currentItem;
+
+          _this6.$refs.auth_room.createAuthorizationForm(room);
+        }
+      });
+    },
+    isFavorite: function isFavorite(room) {}
   }
 });
 
@@ -61747,7 +61852,8 @@ var app = new Vue({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"); //window._ = require('material-icons');
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This

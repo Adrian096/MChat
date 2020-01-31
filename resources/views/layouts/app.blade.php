@@ -23,6 +23,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -35,9 +36,8 @@
             <a class="nav-brand" href="{{ route('welcome') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
-            
             <div class="nav-content">
-                <room-search :rooms="{{$rooms}}"></room-search>
+                <room-search :rooms="{{ $rooms }}"></room-search>
                 <ul class="mr-auto-nav clr-mg-pd"></ul>
                 <ul class="nav-auto-right ml-auto-nav clr-mg-pd">
                     <button type="button" class="btn btn-dark wh-nowrap" v-on:click="$refs.create_room.toggleCreateRoomWindow()">Create Room</button>
@@ -73,7 +73,7 @@
             </div>
         </nav>
 
-        <create-room-form ref="create_room"></create-room-form>
+        <create-room-form :tags="{{ $tags }}" ref="create_room"></create-room-form>
         <room-authorization-form ref="auth_room"></room-authorization-form>
         @if(session('auth-error'))
             <div class="alert alert-danger screen-middle alert-dismissible" role="alert">
@@ -83,12 +83,16 @@
                 </button>
             </div>
         @endif
-        <div class="contener">
+        <div class="content-container">
             <div class="left-box">
                 @yield('content')
             </div>
             <div class="right-box">
                 <span class="resizable-border"></span>
+                <h2 style="color: white;"><center>Favorites</center></h2>
+                <ul id="fav-list">
+                    <li v-for="fav in favorites" v-on:click="changeRoom(fav)">@{{fav}}</li>
+                </ul>
             </div>
         </div>
         <div style="clear: both;"></div>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoomTagTable extends Migration
+class CreateFavoritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateRoomTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('room_tag', function (Blueprint $table) {
+        Schema::create('favorites', function (Blueprint $table) {
             $table->integer('room_id')->unsigned()->index();
             $table->foreign('room_id')->references('id')->on('rooms');
-            $table->integer('tag_id')->unsigned()->index();
-            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->integer('user_id')->index();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateRoomTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('room_tag');
+        Schema::dropIfExists('favorites');
     }
 }

@@ -37,7 +37,7 @@
     cursor: e-resize;
 }
 
-.contener {
+.content-container {
     height: 100%;
     width: 100%;
     background-color: #343a40;
@@ -105,6 +105,14 @@
     text-align: center;
 }
 
+.disabled-option {
+    color: #2e2e2e;
+}
+
+.disabled-option:disabled {
+    color: #2e2e2e;
+}
+
 .form-button-custom, .form-submit-custom, .form-reset-custom {
     background-color: #56baed;
     border: none;
@@ -158,6 +166,10 @@
     transition: all 0.5s ease-in-out;
     -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
+}
+
+.form-text-custom:disabled {
+    color: black;
 }
 
 .form-password-custom:focus, .form-text-custom:focus {
@@ -287,6 +299,19 @@
     max-width: 357px;
     width: 80%;
     margin: 4px;
+}
+
+#fav-list {
+    list-style: none;
+    text-decoration: none;
+}
+
+#fav-list > li {
+    color: #3490dc;;
+    cursor: pointer;
+}
+#fav-list > li:hover {
+    color: #1270ba;
 }
 
 #search-form {

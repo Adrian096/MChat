@@ -14,11 +14,15 @@
             color: white;
             background-color: #343a40;
         }
-        .header {
-            padding: 10px;
+        .room-title-header {
+            margin: 0 0 0 10px;
+        }
+        .room-nav {
+            margin: 1px;
+            font-size: 25px;
             border-style: none none solid none;
         }
-        .flex-row{
+        .flex-row {
             padding: 0;
             display: flex;
             flex-direction: row;
@@ -36,6 +40,17 @@
             flex: 1 100%;
             border-style: none none none solid;
             overflow-y: auto;
+        }
+        #fav-button {
+            cursor: pointer;
+            border: none;
+            margin: 5px;
+            border-radius: 50%;
+            background-color: #454b51;
+            transition: 0.3s;
+        }
+        #fav-button:hover {
+            background-color: #1f7f5c;
         }
         #message{
             height: 4em;
@@ -115,8 +130,18 @@
 
 @section('content')
     <div class="chat-container flex-col">
-        {{-- <room-list :items="{{$rooms}}" current-item="{{Request::route('id')}}"></room-list> --}}
-        <h2 class="header">{{Request::route('id')}}</h2>
+        <div class="nav-content room-nav">
+            <ul class="mr-auto-nav clr-mg-pd">
+                <h3 class="room-title-header" style="height: 100%;">{{Request::route('id')}}</h3>
+            </ul>
+            <ul class="nav-auto-right ml-auto-nav clr-mg-pd">
+                <span id="fav-button" style="float: right; padding: 1px 8px; text-align: center;"
+                    v-on:click="addFavorite('{{Request::route('id')}}')">
+                    <i style="vertical-align: middle;" class="material-icons" v-if="favorites.includes('{{Request::route('id')}}')">favorite</i>
+                    <i style="vertical-align: middle;" class="material-icons" v-else>favorite_border</i>
+                </span>
+            </ul>
+        </div>
         <div id="msgBox">
             <chat-messages 
                 :messages="messages" 

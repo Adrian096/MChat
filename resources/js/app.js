@@ -39,8 +39,8 @@ Vue.component('room-search', require('./components/RoomSearch.vue').default);
 
 const app = new Vue({
     el: '#app',
-    
     data: {
+        favorites: [],
         messages: [],
         message: '',
     },
@@ -50,6 +50,7 @@ const app = new Vue({
     },
     mounted() {
         makeResizableDiv();
+        this.fetchFavorites();
     },
     methods: {  
         fetchMessages(url) {
@@ -81,5 +82,36 @@ const app = new Vue({
                     });
                 });
         },
+        addFavorite(room) {
+            var url = route('favorite', room);
+            axios.post(url).then(response => {
+                if(response.data['status'] == 'success'){
+                    this.fetchFavorites();
+                }
+            });
+        },
+        fetchFavorites() {
+            var url = route('fetch-favorites');
+            axios.get(url).then(response => {
+                if(response.data['status'] == 'success'){
+                    this.favorites = response.data['favorites'];
+                }
+            });
+            
+        },
+        changeRoom(room){
+            var url = route('room', room);
+            axios.get(url).then((response) => {
+                window.location.href = url;
+            }).catch((error) => {
+                if(error.response.status === 403){
+                    this.selected = this.currentItem;
+                    this.$refs.auth_room.createAuthorizationForm(room);
+                }
+            })
+        },
+        isFavorite(room){
+
+        }
     },
 });

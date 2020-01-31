@@ -14,10 +14,9 @@ class CreateChannelAuthsTable extends Migration
     public function up()
     {
         Schema::create('channel_auths', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('room_id');
+            $table->integer('room_id')->unsigned()->index();
             $table->foreign('room_id')->references('id')->on('rooms');
             $table->timestamps();
         });

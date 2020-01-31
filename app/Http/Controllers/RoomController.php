@@ -6,21 +6,23 @@ use App\Events\MessageSent;
 use App\Helpers\ChatManager\ChatManager;
 use App\Http\Requests\RoomAuthorizePost;
 use App\Room;
-use App\User;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class RoomController extends Controller
 {
 
     public function createRoom(Request $request)
     {
+        $tagNames = Tag::all()->map(function ($tag) {
+            return $tag->name;
+        }); 
         $this->validate($request, [
             'roomname' => 'required|string|min:3',
             'private' => 'required|boolean',
+            'tag' => 'required|in:'.$tagNames,
             'password' => 'required_if:private,true|string|min:4',
             'repassword' => 'required_if:private,true|same:password'
         ]);
@@ -36,7 +38,10 @@ class RoomController extends Controller
                 return ['status' => 'failed'];
             }
         }
+        
+        $tag = Tag::where('name', $request->tag)->firstOrFail();
         $room->save();
+        $room->tags()->attach($tag);
         $room->users()->attach(Auth::user());
 
         return ['status' => 'success'];
@@ -73,6 +78,32 @@ class RoomController extends Controller
         return [
             'status' => 'success',
             'messages' => $messages
+        ];
+    }
+
+    public function addFavorite($id)
+    {
+        $user = Auth::user();
+        $room = Room::where('name', $id)->firstOrFail();
+        if(!$room->fav_users->contains($user->id)){
+            $user->fav_rooms()->attach($room);
+            return ['status' => 'success'];
+        }else{
+            $user->fav_rooms()->detach($room);
+            return ['status' => 'success'];
+        }
+       
+    }
+
+    public function fetchFavorites()
+    {
+        $user = Auth::user();
+        $favs = $user->fav_rooms()->get()->map(function ($room) {
+            return $room->name;
+        });
+        return [
+            'status' => 'success',
+            'favorites' => $favs
         ];
     }
 }
