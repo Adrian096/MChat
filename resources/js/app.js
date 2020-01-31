@@ -110,8 +110,5 @@ const app = new Vue({
                 }
             })
         },
-        isFavorite(room){
-
-        }
     },
 });
