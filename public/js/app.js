@@ -1854,6 +1854,10 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.$emit('fetchmessage');
     this.$emit('joinchannel');
+  },
+  updated: function updated() {
+    var element = document.querySelector('.list-messages').parentElement;
+    element.scrollTop = element.scrollHeight;
   }
 });
 
@@ -1868,6 +1872,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -1916,6 +1922,7 @@ __webpack_require__.r(__webpack_exports__);
         "private": false,
         tag: null
       };
+      this.errors = {};
     },
     toggleCreateRoomWindow: function toggleCreateRoomWindow() {
       this.createRoomWindow = !this.createRoomWindow;
@@ -1973,6 +1980,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1988,6 +1997,7 @@ __webpack_require__.r(__webpack_exports__);
       this.fields = {
         password: ''
       };
+      this.errors = {};
     },
     toggleAuthForm: function toggleAuthForm() {
       this.createAuthForm = !this.createAuthForm;
@@ -48692,7 +48702,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "ol",
-    { staticClass: "list-messages" },
+    { staticClass: "list-messages dark-bg" },
     _vm._l(_vm.messages, function(message) {
       return _c("li", [
         _c("div", { staticClass: "message-card" }, [
@@ -48737,256 +48747,273 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.createRoomWindow
     ? _c("div", { staticClass: "wrapper" }, [
-        _c("div", { staticClass: "fadeInDown", attrs: { id: "formContent" } }, [
-          _c(
-            "button",
-            {
-              staticClass: "close",
-              attrs: { type: "button", "aria-label": "Close" },
-              on: { click: _vm.toggleCreateRoomWindow }
-            },
-            [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-          ),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.submit($event)
-                }
-              }
-            },
-            [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.fields.roomname,
-                    expression: "fields.roomname"
-                  }
-                ],
-                staticClass: "form-text-custom fadeIn first",
-                attrs: {
-                  type: "text",
-                  name: "roomname",
-                  id: "roomname",
-                  placeholder: "Room Name"
-                },
-                domProps: { value: _vm.fields.roomname },
+        _c(
+          "div",
+          { staticClass: "dark-bg fadeInDown", attrs: { id: "formContent" } },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn close",
+                attrs: { type: "button", "aria-label": "Close" },
+                on: { click: _vm.toggleCreateRoomWindow }
+              },
+              [
+                _c("i", { staticClass: "material-icons close-icon" }, [
+                  _vm._v("close")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
                 on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.fields, "roomname", $event.target.value)
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.submit($event)
                   }
                 }
-              }),
-              _c("br"),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.roomname
-                ? _c("p", { staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(_vm.errors.roomname[0]))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
+              },
+              [
+                _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.fields.tag,
-                      expression: "fields.tag"
+                      value: _vm.fields.roomname,
+                      expression: "fields.roomname"
                     }
                   ],
-                  staticClass: "form-text-custom",
-                  attrs: { name: "tag" },
+                  staticClass: "form-text-custom dark-bg fadeIn first",
+                  attrs: {
+                    type: "text",
+                    name: "roomname",
+                    id: "roomname",
+                    placeholder: "Room Name"
+                  },
+                  domProps: { value: _vm.fields.roomname },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.fields, "roomname", $event.target.value)
+                    }
+                  }
+                }),
+                _c("br"),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.roomname
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.roomname[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.fields.tag,
+                        expression: "fields.tag"
+                      }
+                    ],
+                    staticClass: "form-text-custom dark-bg fadeIn first",
+                    attrs: { name: "tag" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.fields,
+                          "tag",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: { disabled: "", hidden: "" },
+                        domProps: { value: null }
+                      },
+                      [_vm._v("Category...")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.tags, function(tag) {
+                      return _c("option", { domProps: { value: tag.name } }, [
+                        _vm._v(_vm._s(tag.name))
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "test" } }, [_vm._v("test")])
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.tag
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.tag[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fields.private,
+                      expression: "fields.private"
+                    }
+                  ],
+                  staticClass: "form-check-custom dark-bg fadeIn second",
+                  attrs: { type: "checkbox", name: "private" },
+                  domProps: {
+                    checked: Array.isArray(_vm.fields.private)
+                      ? _vm._i(_vm.fields.private, null) > -1
+                      : _vm.fields.private
+                  },
                   on: {
                     change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.fields,
-                        "tag",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
+                      var $$a = _vm.fields.private,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(_vm.fields, "private", $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              _vm.fields,
+                              "private",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(_vm.fields, "private", $$c)
+                      }
                     }
                   }
-                },
-                [
-                  _c(
-                    "option",
-                    {
-                      attrs: { disabled: "", hidden: "" },
-                      domProps: { value: null }
-                    },
-                    [_vm._v("Category...")]
-                  ),
-                  _vm._v(" "),
-                  _vm._l(_vm.tags, function(tag) {
-                    return _c("option", { domProps: { value: tag.name } }, [
-                      _vm._v(_vm._s(tag.name))
+                }),
+                _c("span", { staticClass: "form-label-custom" }, [
+                  _vm._v("Private Room")
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.private
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.private[0]))
                     ])
-                  }),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "test" } }, [_vm._v("test")])
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.tag
-                ? _c("p", { staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(_vm.errors.tag[0]))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.fields.private,
-                    expression: "fields.private"
-                  }
-                ],
-                staticClass: "form-check-input",
-                attrs: { type: "checkbox", name: "private" },
-                domProps: {
-                  checked: Array.isArray(_vm.fields.private)
-                    ? _vm._i(_vm.fields.private, null) > -1
-                    : _vm.fields.private
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.fields.private,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(_vm.fields, "private", $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.fields.private
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.fields.password,
+                          expression: "fields.password"
+                        }
+                      ],
+                      staticClass: "form-password-custom dark-bg",
+                      attrs: {
+                        type: "password",
+                        name: "password",
+                        placeholder: "password"
+                      },
+                      domProps: { value: _vm.fields.password },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.fields, "password", $event.target.value)
+                        }
+                      }
+                    })
+                  : _vm._e(),
+                _vm.fields.private ? _c("br") : _vm._e(),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.password && _vm.fields.private
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.password[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.fields.private
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.fields.repassword,
+                          expression: "fields.repassword"
+                        }
+                      ],
+                      staticClass: "form-password-custom dark-bg",
+                      attrs: {
+                        type: "password",
+                        name: "repassword",
+                        placeholder: "re-password"
+                      },
+                      domProps: { value: _vm.fields.repassword },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
                           _vm.$set(
                             _vm.fields,
-                            "private",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            "repassword",
+                            $event.target.value
                           )
-                      }
-                    } else {
-                      _vm.$set(_vm.fields, "private", $$c)
-                    }
-                  }
-                }
-              }),
-              _vm._v(" Private Room"),
-              _c("br"),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.private
-                ? _c("p", { staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(_vm.errors.private[0]))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.fields.private
-                ? _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.fields.password,
-                        expression: "fields.password"
-                      }
-                    ],
-                    staticClass: "form-password-custom",
-                    attrs: {
-                      type: "password",
-                      name: "password",
-                      placeholder: "password"
-                    },
-                    domProps: { value: _vm.fields.password },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
                         }
-                        _vm.$set(_vm.fields, "password", $event.target.value)
                       }
-                    }
-                  })
-                : _vm._e(),
-              _vm.fields.private ? _c("br") : _vm._e(),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.password && _vm.fields.private
-                ? _c("p", { staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(_vm.errors.password[0]))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.fields.private
-                ? _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.fields.repassword,
-                        expression: "fields.repassword"
-                      }
-                    ],
-                    staticClass: "form-password-custom",
-                    attrs: {
-                      type: "password",
-                      name: "repassword",
-                      placeholder: "re-password"
-                    },
-                    domProps: { value: _vm.fields.repassword },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.fields, "repassword", $event.target.value)
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm.fields.private ? _c("br") : _vm._e(),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.repassword && _vm.fields.private
-                ? _c("p", { staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(_vm.errors.repassword[0]))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.unauthorized
-                ? _c("p", { staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(_vm.errors.unauthorized))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-submit-custom fadeIn third",
-                attrs: { type: "submit", value: "Create" }
-              })
-            ]
-          )
-        ])
+                    })
+                  : _vm._e(),
+                _vm.fields.private ? _c("br") : _vm._e(),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.repassword && _vm.fields.private
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.repassword[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.unauthorized
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.unauthorized))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-submit-custom fadeIn third",
+                  attrs: { type: "submit", value: "Create" }
+                })
+              ]
+            )
+          ]
+        )
       ])
     : _vm._e()
 }
@@ -49014,75 +49041,86 @@ var render = function() {
   var _c = _vm._self._c || _h
   return this.createAuthForm
     ? _c("div", { staticClass: "alert wrapper" }, [
-        _c("div", { staticClass: "fadeInDown", attrs: { id: "formContent" } }, [
-          _c(
-            "button",
-            {
-              staticClass: "close",
-              attrs: { type: "button", "aria-label": "Close" },
-              on: { click: _vm.toggleAuthForm }
-            },
-            [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-          ),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.submit($event)
-                }
-              }
-            },
-            [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.fields.password,
-                    expression: "fields.password"
-                  }
-                ],
-                staticClass: "form-password-custom fadeIn first",
-                attrs: {
-                  type: "password",
-                  name: "password",
-                  placeholder: "password"
-                },
-                domProps: { value: _vm.fields.password },
+        _c(
+          "div",
+          { staticClass: "fadeInDown dark-bg", attrs: { id: "formContent" } },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn close",
+                attrs: { type: "button" },
+                on: { click: _vm.toggleAuthForm }
+              },
+              [
+                _c("i", { staticClass: "material-icons close-icon" }, [
+                  _vm._v("close")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
                 on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.fields, "password", $event.target.value)
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.submit($event)
                   }
                 }
-              }),
-              _c("br"),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.password
-                ? _c("p", { staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(_vm.errors.password[0]))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.roomname
-                ? _c("p", { staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(_vm.errors.roomname[0]))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-submit-custom fadeIn second",
-                attrs: { type: "submit", value: "Authorize" }
-              })
-            ]
-          )
-        ])
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fields.password,
+                      expression: "fields.password"
+                    }
+                  ],
+                  staticClass: "form-password-custom dark-bg fadeIn first",
+                  attrs: {
+                    type: "password",
+                    name: "password",
+                    placeholder: "password"
+                  },
+                  domProps: { value: _vm.fields.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.fields, "password", $event.target.value)
+                    }
+                  }
+                }),
+                _c("br"),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.password
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.password[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.roomname
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.roomname[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-submit-custom fadeIn second",
+                  attrs: { type: "submit", value: "Auth" }
+                })
+              ]
+            )
+          ]
+        )
       ])
     : _vm._e()
 }
@@ -49249,8 +49287,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "search" } }, [
-    _c("div", { attrs: { id: "search-form" } }, [
+  return _c("div", { staticClass: "dark-bg", attrs: { id: "search" } }, [
+    _c("div", { staticClass: "dark-bg", attrs: { id: "search-form" } }, [
       _c("input", {
         directives: [
           {
@@ -49260,6 +49298,7 @@ var render = function() {
             expression: "search"
           }
         ],
+        staticClass: "dark-bg",
         attrs: {
           type: "text",
           name: "search_text",
@@ -49278,6 +49317,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("input", {
+        staticClass: "dark-bg",
         attrs: {
           type: "button",
           name: "search_button",
@@ -49294,6 +49334,7 @@ var render = function() {
         return _c(
           "li",
           {
+            staticClass: "dark-bg",
             on: {
               click: function($event) {
                 return _vm.changeRoom(room.name)
@@ -49349,7 +49390,7 @@ var render = function() {
             expression: "fields.username"
           }
         ],
-        staticClass: "form-text-custom",
+        staticClass: "form-text-custom dark-bg",
         attrs: { type: "text", name: "username", placeholder: "username" },
         domProps: { value: _vm.fields.username },
         on: {
@@ -49410,7 +49451,10 @@ var render = function() {
             }
           }
         }),
-        _vm._v(" Change Password "),
+        _c("span", { staticClass: "form-label-custom" }, [
+          _vm._v("Change Password")
+        ]),
+        _vm._v(" "),
         _c("br")
       ]),
       _vm._v(" "),
@@ -49429,7 +49473,7 @@ var render = function() {
             expression: "fields.oldPassword"
           }
         ],
-        staticClass: "form-password-custom",
+        staticClass: "form-password-custom dark-bg",
         attrs: {
           type: "password",
           name: "old-password",
@@ -49469,7 +49513,7 @@ var render = function() {
             expression: "fields.newPassword"
           }
         ],
-        staticClass: "form-password-custom",
+        staticClass: "form-password-custom dark-bg",
         attrs: {
           type: "password",
           name: "old-password",
@@ -49503,7 +49547,7 @@ var render = function() {
             expression: "fields.repassword"
           }
         ],
-        staticClass: "form-password-custom",
+        staticClass: "form-password-custom dark-bg",
         attrs: {
           type: "password",
           name: "repassword",
@@ -61761,10 +61805,6 @@ var app = new Vue({
     messages: [],
     message: ''
   },
-  updated: function updated() {
-    var element = document.getElementById("msgBox");
-    element.scrollTop = element.scrollHeight;
-  },
   mounted: function mounted() {
     makeResizableDiv();
     this.fetchFavorites();
@@ -61835,8 +61875,7 @@ var app = new Vue({
           _this6.$refs.auth_room.createAuthorizationForm(room);
         }
       });
-    },
-    isFavorite: function isFavorite(room) {}
+    }
   }
 });
 

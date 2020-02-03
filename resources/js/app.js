@@ -44,10 +44,6 @@ const app = new Vue({
         messages: [],
         message: '',
     },
-    updated() {
-        var element = document.getElementById("msgBox");
-        element.scrollTop = element.scrollHeight;
-    },
     mounted() {
         makeResizableDiv();
         this.fetchFavorites();

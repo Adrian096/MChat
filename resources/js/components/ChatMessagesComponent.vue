@@ -1,5 +1,5 @@
 <template>
-    <ol class="list-messages">
+    <ol class="list-messages dark-bg">
         <li v-for="message in messages">
             <div class="message-card">
                 <div class="message-header"><p class="card-text">{{message.user}}</p></div>
@@ -17,5 +17,10 @@
             this.$emit('fetchmessage');
             this.$emit('joinchannel');
         },
+
+        updated() {
+        var element = document.querySelector('.list-messages').parentElement;
+        element.scrollTop = element.scrollHeight;
+    },
     }
 </script>

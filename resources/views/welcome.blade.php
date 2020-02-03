@@ -69,7 +69,7 @@
 @section('content')
 <div class="container">
     @foreach ($tags as $tag)
-        <div class="tag-header"><h2 style="margin-left: 15px;"> {{ $tag->name }} <span class="badge badge-info">{{ $tag->rooms->count() }}</span> </h2></div>
+        <div class="tag-header dark-bg"><h2 style="margin-left: 15px;"> {{ $tag->name }} <span class="badge badge-info">{{ $tag->rooms->count() }}</span> </h2></div>
         <ul class="room-list clr-list-style">
             @foreach ($tag->rooms as $room)
                 <li class="fl-left" v-on:click="changeRoom('{{$room->name}}')">{{$room->name}}</li>

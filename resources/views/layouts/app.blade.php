@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'MyChat') }}</title>
 
     <!-- Scripts -->
     <script>
@@ -32,7 +32,7 @@
 </head>
 <body>
     <div id="app"> 
-        <nav class="navbar bg-dark bd-green">
+        <nav class="navbar dark-bg">
             <a class="nav-brand" href="{{ route('welcome') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
@@ -40,7 +40,7 @@
                 <room-search :rooms="{{ $rooms }}"></room-search>
                 <ul class="mr-auto-nav clr-mg-pd"></ul>
                 <ul class="nav-auto-right ml-auto-nav clr-mg-pd">
-                    <button type="button" class="btn btn-dark wh-nowrap" v-on:click="$refs.create_room.toggleCreateRoomWindow()">Create Room</button>
+                    <button type="button" class="btn btn-dark dark-bg wh-nowrap" v-on:click="$refs.create_room.toggleCreateRoomWindow()">Create Room</button>
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -83,15 +83,15 @@
                 </button>
             </div>
         @endif
-        <div class="content-container">
-            <div class="left-box">
+        <div class="content-container dark-bg">
+            <div class="left-box dark-bg">
                 @yield('content')
             </div>
-            <div class="right-box">
+            <div class="right-box dark-bg">
                 <span class="resizable-border"></span>
-                <h2 style="color: white;"><center>Favorites</center></h2>
-                <ul id="fav-list">
-                    <li v-for="fav in favorites" v-on:click="changeRoom(fav)">@{{fav}}</li>
+                <div class="fav-header">Favorites</div>
+                <ul id="fav-list" class="dark-bg">
+                    <li class="dark-bg" v-for="fav in favorites" v-on:click="changeRoom(fav)">@{{fav}}</li>
                 </ul>
             </div>
         </div>

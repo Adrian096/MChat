@@ -1,7 +1,18 @@
 * {
     box-sizing: border-box;
-    border-color: rgb(31, 127, 92);
+}
+
+.dark-bg {
+    background-color: #232323;
+    border-color: #343a40;
     border-width: 1px;
+    color: white;
+}
+
+.dark-bg[type="button"]:hover {
+    background-color: #272727 !important;
+    border-color: #343a40;
+    cursor: pointer;
 }
 
 #app {
@@ -40,7 +51,6 @@
 .content-container {
     height: 100%;
     width: 100%;
-    background-color: #343a40;
 }
 
 .left-box {
@@ -95,14 +105,27 @@
 }
 
 #formContent {
-    -webkit-border-radius: 10px 10px 10px 10px;
-    border-radius: 10px 10px 10px 10px;
-    background: #fff;
+    -webkit-border-radius: 10px;
+    border-style: solid;
+    border-radius: 10px;
     max-width: 450px;
-    padding: 0px;
-    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    padding: 20px;
+    -webkit-box-shadow: 0 15px 30px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.3);
     text-align: center;
+}
+
+.close-btn {
+    display: block;
+    background-color: #343a40;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+.close-icon {
+    color: white;
+    padding: 3px;
 }
 
 .disabled-option {
@@ -114,20 +137,21 @@
 }
 
 .form-button-custom, .form-submit-custom, .form-reset-custom {
-    background-color: #56baed;
+    background-color: #1f7f5c;
     border: none;
     color: white;
     padding: 15px 80px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: block;
+    outline: none;
     text-transform: uppercase;
     font-size: 13px;
-    -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-    box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+    -webkit-box-shadow: 0 10px 30px 0 rgba(31, 127, 92, 0.4);
+    box-shadow: 0 10px 30px 0 rgba(31, 127, 92,0.4);
     -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
-    margin: 5px 20px 40px 20px;
+    margin: 20px auto 40px auto;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
@@ -136,7 +160,7 @@
 }
 
 .form-button-custom:hover, .form-submit-custom:hover, .form-reset-custom:hover {
-    background-color: #39ace7;
+    background-color: #3f9f7e;
 }
 
 .form-button-custom:active, .form-submit-custom:active, .form-reset-custom:active {
@@ -147,18 +171,26 @@
     transform: scale(0.95);
 }
 
+.form-check-custom {
+    display: inline-block;
+}
+
+.form-label-custom {
+    color: white;
+    margin-left: 5px;
+}
+
 .form-text-custom, .form-password-custom {
-    background-color: #f6f6f6;
-    border: none;
-    color: #0d0d0d;
+    color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: block;
+    outline: none;
     font-size: 16px;
-    margin: 5px;
+    margin: 5px auto 5px auto;
     width: 85%;
-    border: 2px solid #f6f6f6;
+    border-style: solid;
     -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
     -ms-transition: all 0.5s ease-in-out;
@@ -169,12 +201,12 @@
 }
 
 .form-text-custom:disabled {
-    color: black;
+    color: #cccccc;
 }
 
 .form-password-custom:focus, .form-text-custom:focus {
-    background-color: #fff;
-    border-bottom: 2px solid #5fbae9;
+    -webkit-box-shadow: 0 10px 30px 0 rgba(31, 127, 92, 0.4);
+    box-shadow: 0 10px 30px 0 rgba(31, 127, 92,0.4);
 }
 
 .form-password-custom:placeholder, .form-text-custom:placeholder {
@@ -261,7 +293,7 @@
     bottom: -10px;
     width: 0;
     height: 2px;
-    background-color: #56baed;
+    background-color: #1f7f5c;
     content: "";
     transition: width 0.2s;
 }
@@ -275,7 +307,7 @@
 }
 
 .highlight:hover {
-    background-color: #d9d9d9;
+    background-color: #ccc;
 }
 
 .center-align{
@@ -293,25 +325,40 @@
     list-style: none;
 }
 
+.fav-header {
+    font-size: 2vw;
+    text-align: center;
+}
+
+#fav-list {
+    list-style: none;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+}
+
+#fav-list > li {
+    display: block;
+    padding: 10px;
+    margin-left: 5px;
+    font-size: 1rem;
+    border-style: none none dotted none;
+    color: #3490dc;;
+    cursor: pointer;
+}
+#fav-list > li:hover {
+    color: #1270ba;
+    border-color: rgb(16, 92, 64);
+}
+
 #search {
     position: relative;
     display: inline-block;
     max-width: 357px;
     width: 80%;
     margin: 4px;
-}
-
-#fav-list {
-    list-style: none;
-    text-decoration: none;
-}
-
-#fav-list > li {
-    color: #3490dc;;
-    cursor: pointer;
-}
-#fav-list > li:hover {
-    color: #1270ba;
+    padding: 0;
+    border-style: none;
 }
 
 #search-form {
@@ -324,44 +371,26 @@
     padding: 15px 0 15px 20px;
     font-size: 12px;
     font-family: Montserrat, sans-serif;
-    border: 0 none;
     margin-right: 0;
     color: white;
     outline: none;
-    background: #1f7f5c;
-    float: left;
-    box-sizing: border-box;
     transition: all 0.15s;
-}
-
-#search_text::-webkit-input-placeholder { /* WebKit browsers */
-    color: white;
-}
-
-#search_text:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color: white;
-}
-
-#search_text::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color: white;
-}
-
-#search_text:-ms-input-placeholder { /* Internet Explorer 10+ */
-    color: white;
+    background-color: #2e2e2e;
+    border-style: solid;
+    border-radius: 5px 0 0 0;
 }
 
 #search_text:focus {
-    background: rgb(64, 151, 119);
+    background-color: #2e2e2e;
 }
 
 #search_button {
-    border: 0 none;
-    background: #1f7f5c;
     width: 60px;
-    float: left;
     padding: 0;
     text-align: center;
     cursor: pointer;
+    border-style: solid solid solid none;
+    border-radius: 0 5px 0 0;
 }
 
 .subnav {
@@ -373,19 +402,13 @@
     z-index: 1;
 }
 
-.subnav::after {
-    content: '';
-    clear: both;
-}
-
 .subnav li {
     padding: 5px;
-    float: none;
     display: block;
     width: 100%;
     color: white;
     background: #232323;
-    border-bottom: 1px solid #2e2e2e;
+    border-style: none solid solid solid;
 }
 
 .subnav li:hover {
@@ -444,4 +467,3 @@
     flex-wrap: nowrap;
     list-style: none;
 }
-

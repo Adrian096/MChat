@@ -8,11 +8,6 @@
         }
         .chat-container > * {
             color: white;
-            background-color: #343a40;
-        }
-        .chat-style{
-            color: white;
-            background-color: #343a40;
         }
         .room-title-header {
             margin: 0 0 0 10px;
@@ -46,7 +41,6 @@
             border: none;
             margin: 5px;
             border-radius: 50%;
-            background-color: #454b51;
             transition: 0.3s;
         }
         #fav-button:hover {
@@ -64,10 +58,6 @@
             color: white;
             flex: 0 0 auto;
             border-style: solid none solid none;
-        }
-        #sendBtn:hover{
-            cursor: pointer;
-            background-color: #454b52;
         }
         #room-selection  {
             -moz-appearance:none; /* Firefox */
@@ -111,7 +101,6 @@
             display: inline-block;
             max-width: 300px;
             margin-top: 5px;
-            background-color: #343a40;
         }
         .message-header{
             color: #65e669;
@@ -129,20 +118,20 @@
 @endsection
 
 @section('content')
-    <div class="chat-container flex-col">
-        <div class="nav-content room-nav">
-            <ul class="mr-auto-nav clr-mg-pd">
-                <h3 class="room-title-header" style="height: 100%;">{{Request::route('id')}}</h3>
+    <div class="chat-container flex-col dark-bg">
+        <div class="nav-content room-nav dark-bg">
+            <ul class="mr-auto-nav clr-mg-pd dark-bg">
+                <h3 class="room-title-header dark-bg" style="height: 100%;">{{Request::route('id')}}</h3>
             </ul>
-            <ul class="nav-auto-right ml-auto-nav clr-mg-pd">
-                <span id="fav-button" style="float: right; padding: 1px 8px; text-align: center;"
+            <ul class="nav-auto-right ml-auto-nav clr-mg-pd dark-bg">
+                <span id="fav-button" class="dark-bg" style="float: right; padding: 1px 8px; text-align: center;"
                     v-on:click="addFavorite('{{Request::route('id')}}')">
                     <i style="vertical-align: middle;" class="material-icons" v-if="favorites.includes('{{Request::route('id')}}')">favorite</i>
                     <i style="vertical-align: middle;" class="material-icons" v-else>favorite_border</i>
                 </span>
             </ul>
         </div>
-        <div id="msgBox">
+        <div id="msgBox" class="dark-bg">
             <chat-messages 
                 :messages="messages" 
                 v-on:fetchmessage="fetchMessages('{{ route('fetch-messages', ['id' => Request::route('id')]) }}')"
@@ -150,10 +139,9 @@
         </div>
 
         <div class="flex-row">
-            <textarea name="message" id="message" class="chat-style" v-model="message"></textarea>
-            <button id="sendBtn" class="chat-style" 
-                v-on:click="sendMessage('{{ route('send-message', ['id' => Request::route('id')]) }}')">Send
-            </button>
+            <textarea name="message" id="message" class="dark-bg" v-model="message"></textarea>
+            <input type="button" id="sendBtn" class="dark-bg" 
+                v-on:click.prevent="sendMessage('{{ route('send-message', ['id' => Request::route('id')]) }}')" value="Send"/>
         </div>
     </div>
 @endsection

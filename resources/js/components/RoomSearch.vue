@@ -1,11 +1,11 @@
 <template>
-    <div id="search">
-        <div id="search-form">
-            <input v-model="search" type="text" name="search_text" id="search_text" placeholder="Search"/>
-            <input type="button" name="search_button" id="search_button" value="OK">
+    <div id="search" class="dark-bg">
+        <div id="search-form" class="dark-bg">
+            <input v-model="search" type="text" name="search_text" id="search_text" class="dark-bg" placeholder="Search"/>
+            <input type="button" name="search_button" id="search_button"  class="dark-bg" value="OK">
         </div>
         <ul class="subnav clr-mg-pd">
-            <li v-for="room in filteredList" @click="changeRoom(room.name)">{{room.name}}</li>
+            <li class="dark-bg" v-for="room in filteredList" @click="changeRoom(room.name)">{{room.name}}</li>
         </ul>
     </div>
 </template>

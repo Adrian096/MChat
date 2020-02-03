@@ -1,13 +1,17 @@
 @extends('layouts.app')
 
+@section('styles')
+    
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+            <div class="card dark-bg" style="margin: 20px">
+                <div class="card-header dark-bg">{{ __('Login') }}</div>
 
-                <div class="card-body">
+                <div class="card-body dark-bg">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 

@@ -1,14 +1,16 @@
 <template>
     <div class="alert wrapper" v-if="this.createAuthForm">
-        <div class="fadeInDown" id="formContent">
-            <button type="button" class="close" aria-label="Close" @click="toggleAuthForm">
-                <span aria-hidden="true">&times;</span>
-            </button><br/>
+        <div class="fadeInDown dark-bg" id="formContent">
+            <button type="button" class="btn close" @click="toggleAuthForm">
+                <i class="material-icons close-icon">close</i>
+            </button>
+            <br/>
+            <br/>
             <form @submit.prevent="submit">
-                <input type="password" class="form-password-custom fadeIn first" name="password" placeholder="password" v-model="fields.password"><br/>
+                <input type="password" class="form-password-custom dark-bg fadeIn first" name="password" placeholder="password" v-model="fields.password"><br/>
                     <p class="text-danger" v-if="errors && errors.password">{{ errors.password[0] }}</p>
                     <p class="text-danger" v-if="errors && errors.roomname">{{ errors.roomname[0] }}</p>
-                <input type="submit" class="form-submit-custom fadeIn second" value="Authorize">
+                <input type="submit" class="form-submit-custom fadeIn second" value="Auth">
             </form>
         </div>
     </div>
@@ -30,6 +32,7 @@ export default {
             this.fields = {
                 password: '',
             };
+            this.errors = {};
         },
         toggleAuthForm(){
             this.createAuthForm = !this.createAuthForm;

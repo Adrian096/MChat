@@ -16,13 +16,10 @@ class RoomController extends Controller
 
     public function createRoom(Request $request)
     {
-        $tagNames = Tag::all()->map(function ($tag) {
-            return $tag->name;
-        }); 
         $this->validate($request, [
             'roomname' => 'required|string|min:3',
             'private' => 'required|boolean',
-            'tag' => 'required|in:'.$tagNames,
+            'tag' => 'required|exists:tags,name',
             'password' => 'required_if:private,true|string|min:4',
             'repassword' => 'required_if:private,true|same:password'
         ]);
